@@ -27,6 +27,8 @@ while True:
             rotation = 1
         if (rotation < -1):
             rotation = -1
+        if (abs(rotation) < 0.25):
+            rotation = 0
         drivetrain.arcade(throttle*drive_speed, rotation*drive_speed)
 
         if ((pestolink.get_button(7) or pestolink.get_button(3)) and servo1_pos < 180):
