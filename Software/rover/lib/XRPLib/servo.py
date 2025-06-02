@@ -58,7 +58,10 @@ class Servo:
         :ptype degrees: float
         """
         self._servo.duty_ns(int(degrees * self.MICROSEC_PER_DEGREE + self.LOW_ANGLE_OFFSET))
-
+    
+    def get_angle(self):
+        return (self._servo.duty_ns()-self.LOW_ANGLE_OFFSET)/self.MICROSEC_PER_DEGREE
+    
     def free(self):
         """
         Allows the servo to spin freely without holding position

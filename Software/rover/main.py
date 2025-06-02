@@ -13,12 +13,15 @@ robot_name = "Rover 1"
 
 # Create an instance of the PestoLinkAgent class
 pestolink = PestoLinkAgent(robot_name)
-
+print(robot_name)
 # Start an infinite loop
-servo_step = 0.25
-servo1_pos = 90
-servo2_pos = 90
+servo_step = 0.5
 drive_speed = 1
+servo1_pos = 120
+servo2_pos = 90
+servo_one.set_angle(servo1_pos)
+servo_two.set_angle(servo2_pos)
+time.sleep(0.5)
 while True:
     if pestolink.is_connected():  # Check if a BLE connection is established
         rotation = -1 * (pestolink.get_axis(2)+pestolink.get_axis(0))
@@ -27,23 +30,26 @@ while True:
             rotation = 1
         if (rotation < -1):
             rotation = -1
-        if (abs(rotation) < 0.25):
+        if (abs(rotation) < 0.40):
             rotation = 0
         drivetrain.arcade(throttle*drive_speed, rotation*drive_speed)
 
-        if ((pestolink.get_button(7) or pestolink.get_button(3)) and servo1_pos < 180):
+        if ((pestolink.get_button(7) or pestolink.get_button(3)) and servo1_pos < 145):
             servo1_pos += servo_step
-        if ((pestolink.get_button(6) or pestolink.get_button(2)) and servo1_pos > 0):
+        if ((pestolink.get_button(6) or pestolink.get_button(2)) and servo1_pos > 70):
             servo1_pos -= servo_step
 
         servo_one.set_angle(servo1_pos)
 
         if ((pestolink.get_button(5) or pestolink.get_button(1)) and servo2_pos < 180):
             servo2_pos += servo_step
-        if ((pestolink.get_button(4) or pestolink.get_button(0)) and servo2_pos > 0):
+        if ((pestolink.get_button(4) or pestolink.get_button(0)) and servo2_pos > 50):
             servo2_pos -= servo_step
 
         servo_two.set_angle(servo2_pos)
+
+        print("servo1: "+str(servo_one.get_angle()) +
+              ", servo2: "+str(servo_two.get_angle()))
 
         batteryVoltage = (
             ADC(Pin("BOARD_VIN_MEASURE")).read_u16())/(1024*64/14)
