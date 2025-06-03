@@ -9,7 +9,7 @@ from pestolink import PestoLinkAgent
 
 # Choose the name your robot shows up as in the Bluetooth paring menu
 # Name should be 8 characters max!
-robot_name = "Rover 1"
+robot_name = "Demo"
 
 # Create an instance of the PestoLinkAgent class
 pestolink = PestoLinkAgent(robot_name)
@@ -17,7 +17,7 @@ print(robot_name)
 # Start an infinite loop
 servo_step = 0.5
 drive_speed = 1
-servo1_pos = 120
+servo1_pos = 70
 servo2_pos = 90
 servo_one.set_angle(servo1_pos)
 servo_two.set_angle(servo2_pos)
@@ -32,18 +32,18 @@ while True:
             rotation = -1
         if (abs(rotation) < 0.40):
             rotation = 0
-        drivetrain.arcade(throttle*drive_speed, rotation*drive_speed)
+        drivetrain.arcade(throttle*drive_speed, rotation*drive_speed*0.70)
 
-        if ((pestolink.get_button(7) or pestolink.get_button(3)) and servo1_pos < 145):
+        if ((pestolink.get_button(7) or pestolink.get_button(3)) and servo1_pos < 110):
             servo1_pos += servo_step
-        if ((pestolink.get_button(6) or pestolink.get_button(2)) and servo1_pos > 70):
+        if ((pestolink.get_button(6) or pestolink.get_button(0)) and servo1_pos > 45):
             servo1_pos -= servo_step
 
         servo_one.set_angle(servo1_pos)
 
-        if ((pestolink.get_button(5) or pestolink.get_button(1)) and servo2_pos < 180):
+        if ((pestolink.get_button(5) or pestolink.get_button(2)) and servo2_pos < 180):
             servo2_pos += servo_step
-        if ((pestolink.get_button(4) or pestolink.get_button(0)) and servo2_pos > 50):
+        if ((pestolink.get_button(4) or pestolink.get_button(1)) and servo2_pos > 50):
             servo2_pos -= servo_step
 
         servo_two.set_angle(servo2_pos)
